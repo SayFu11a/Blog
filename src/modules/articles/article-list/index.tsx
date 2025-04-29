@@ -11,7 +11,9 @@ import {
 import { Avatar, Card, Flex, Image, Switch } from 'antd';
 import styles from './ArticlePage.module.scss';
 import MyTags from '../../../shared/UI/MyTags';
-import { Articles } from '../types';
+import { ArticleId, ArticlesData } from '../types';
+import { articlesApi } from '../api2';
+import { useNavigate } from 'react-router-dom';
 
 const actions: React.ReactNode[] = [
     <EditOutlined key="edit" />,
@@ -19,16 +21,18 @@ const actions: React.ReactNode[] = [
     <EllipsisOutlined key="ellipsis" />,
 ];
 
-const ArticlePage: FC<Articles> = ({ articls }) => {
-    const [loading, setLoading] = useState<boolean>(false);
+const ArticleList: FC = () => {
+    const { data, isLoading } = articlesApi.useGetArticleQuery();
 
-    // <div key={article.slug}>
-    //     <span>{article?.title}</span>
+    const navigate = useNavigate();
 
-    //     {/* <span>{article?.description}</span> */}
-    // </div>
+    const handleArticleClick = (slug: ArticleId) => {
+        navigate(slug, { relative: 'path' });
+    };
 
-    return articls?.articles?.map((article) => {
+    console.log(isLoading);
+
+    return data?.articles?.map((article) => {
         const options = {
             year: 'numeric',
             month: 'long',
@@ -45,7 +49,12 @@ const ArticlePage: FC<Articles> = ({ articls }) => {
                 style={{ marginBottom: '26px' }}
             >
                 {/* <Switch checked={!loading} onChange={(checked) => setLoading(!checked)} /> */}
-                <Card loading={loading} style={{ width: 938 }}>
+                <Card
+                    onClick={() => handleArticleClick(article.slug)}
+                    loading={isLoading}
+                    style={{ width: 938 }}
+                    hoverable
+                >
                     <Flex justify="space-between">
                         <div>
                             <span className={styles.title}>{article?.title}</span>{' '}
@@ -69,4 +78,4 @@ const ArticlePage: FC<Articles> = ({ articls }) => {
     });
 };
 
-export default ArticlePage;
+export default ArticleList;

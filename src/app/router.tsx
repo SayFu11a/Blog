@@ -1,13 +1,11 @@
 import { createBrowserRouter, Link, Outlet, redirect } from 'react-router-dom';
-// import { UsersList } from '../modules/users/users-list';
-// import { Counters } from '../modules/counters/counters';
-// import { UserInfo } from '../modules/users/user-info';
-// import { usersApi } from '../modules/users/api';
 
 import Header from '../shared/UI/Header';
-import ArticleList from '../modules/articles/article-list';
+// import ArticleList from '../modules/articles/article-list';
 
 import { store } from './store';
+import { articlesApi } from '../modules/articles/api2';
+import ArticleList from '../modules/articles/article-list';
 
 const loadStore = () =>
     new Promise((resolve) => {
@@ -39,27 +37,29 @@ export const router = createBrowserRouter([
             {
                 path: 'articles',
                 element: <ArticleList />,
-                // loader: () => {
-                //     loadStore().then(async () => {
-                //         store.dispatch(
-                //             usersApi.util.prefetch('getUsers', undefined, {})
-                //         );
-                //     });
-                //     return null;
-                // },
+                loader: () => {
+                    loadStore().then(async () => {
+                        store.dispatch(
+                            articlesApi.util.prefetch('getArticle', undefined, {})
+                        );
+                    });
+                    return null;
+                },
             },
-            // {
-            //     path: 'articles/:id',
-            //     element: <UserInfo />,
-            //     // loader: ({ params }) => {
-            //     //     loadStore().then(async () => {
-            //     //         store.dispatch(
-            //     //             usersApi.util.prefetch('getUser', params.id ?? '', {})
-            //     //         );
-            //     //     });
-            //     //     return null;
-            //     // },
-            // },
+            {
+                path: 'articles/:id',
+                element: <>detals</>,
+                loader: ({ params }) => {
+                    loadStore().then(async () => {
+                        // store.dispatch(
+                        console.log(params.id);
+
+                        // usersApi.util.prefetch('getUser', params.id ?? '', {})
+                        // );
+                    });
+                    return null;
+                },
+            },
             {
                 path: 'shis',
                 element: <>shis shis</>,

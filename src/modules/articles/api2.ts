@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import { baseApi } from '../../shared/api';
-// import { Article, UserId } from './users.slice';
 
-import { Articles, ArticleId } from './types';
+import { ArticlesData, ArticleId, Article } from './types';
 
 const ArticlesDtoSchema = z.object({
     articles: z.array(
@@ -26,16 +25,16 @@ const ArticlesDtoSchema = z.object({
 
 export const articlesApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
-        getArticle: create.query<Articles, void>({
+        getArticle: create.query<ArticlesData, void>({
             query: () => '/articles',
             providesTags: ['Articles', { type: 'Articles', id: 'LIST' }],
             transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
         }),
-        // getUser: create.query<User, UserId>({
-        //     query: (userId) => `/users/${userId}`,
-        //     providesTags: ['Users'],
-        //     transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
-        // }),
+        getArticl: create.query<Article, ArticleId>({
+            query: (articleId) => `/articles/${articleId}`,
+            providesTags: ['Articles'],
+            transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
+        }),
         // deleteUser: create.mutation<void, UserId>({
         //     query: (userId) => ({ method: 'DELETE', url: `/users/${userId}` }),
         //     // invalidatesTags: ['Users'], // https://youtu.be/9NVDzMW6b1k?t=9195
