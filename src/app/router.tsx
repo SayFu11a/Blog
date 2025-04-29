@@ -4,8 +4,9 @@ import Header from '../shared/UI/Header';
 // import ArticleList from '../modules/articles/article-list';
 
 import { store } from './store';
-import { articlesApi } from '../modules/articles/api2';
+import { articlesApi } from '../modules/articles/api';
 import ArticleList from '../modules/articles/article-list';
+import ArticleDetails from '../modules/articles/article-details';
 
 const loadStore = () =>
     new Promise((resolve) => {
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
                 loader: () => {
                     loadStore().then(async () => {
                         store.dispatch(
-                            articlesApi.util.prefetch('getArticle', undefined, {})
+                            articlesApi.util.prefetch('getArticles', undefined, {})
                         );
                     });
                     return null;
@@ -48,14 +49,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'articles/:id',
-                element: <>detals</>,
+                element: <ArticleDetails />,
                 loader: ({ params }) => {
                     loadStore().then(async () => {
-                        // store.dispatch(
-                        console.log(params.id);
-
-                        // usersApi.util.prefetch('getUser', params.id ?? '', {})
-                        // );
+                        store.dispatch(
+                            articlesApi.util.prefetch('getArticle', params.id ?? '', {})
+                        );
                     });
                     return null;
                 },

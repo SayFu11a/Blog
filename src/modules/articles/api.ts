@@ -3,37 +3,39 @@ import { baseApi } from '../../shared/api';
 
 import { ArticlesData, ArticleId, Article } from './types';
 
+const ArticleDtoSchema = z.object({
+    title: z.string(),
+    description: z.string(),
+    slug: z.string(),
+    favoritesCount: z.number(),
+    tagList: z.array(z.nullable(z.string())).optional(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    favorited: z.boolean(),
+    author: z.object({
+        username: z.string(),
+        image: z.string(),
+        following: z.boolean(),
+    }),
+});
+
 const ArticlesDtoSchema = z.object({
-    articles: z.array(
-        z.object({
-            title: z.string(),
-            description: z.string(),
-            slug: z.string(),
-            favoritesCount: z.number(),
-            tagList: z.array(z.nullable(z.string())).optional(),
-            createdAt: z.string(),
-            updatedAt: z.string(),
-            author: z.object({
-                username: z.string(),
-                image: z.string(),
-                following: z.boolean(),
-            }),
-        })
-    ),
+    articles: z.array(ArticleDtoSchema),
     articlesCount: z.number(),
 });
 
 export const articlesApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
-        getArticle: create.query<ArticlesData, void>({
+        getArticles: create.query<ArticlesData, void>({
             query: () => '/articles',
             providesTags: ['Articles', { type: 'Articles', id: 'LIST' }],
             transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
         }),
-        getArticl: create.query<Article, ArticleId>({
+        getArticle: create.query<Article, ArticleId>({
             query: (articleId) => `/articles/${articleId}`,
             providesTags: ['Articles'],
-            transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
+            transformResponse: (res: { article: Article }) =>
+                ArticleDtoSchema.parse(res.article),
         }),
         // deleteUser: create.mutation<void, UserId>({
         //     query: (userId) => ({ method: 'DELETE', url: `/users/${userId}` }),
