@@ -1,20 +1,6 @@
 export type ArticleId = string;
 export type ArticlesData = {
-    articles: [
-        {
-            title: string;
-            description: string;
-            slug: ArticleId;
-            favoritesCount: number;
-            tagList: string[];
-            createdAt: string;
-            author: {
-                username: string;
-                image: string;
-                following: boolean;
-            };
-        }
-    ];
+    articles: Article[];
     articlesCount: number;
 };
 
@@ -25,6 +11,7 @@ export type Article = {
     favoritesCount: number;
     tagList: string[];
     createdAt: string;
+    body: string | undefined;
     author: {
         username: string;
         image: string;

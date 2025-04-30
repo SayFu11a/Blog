@@ -12,6 +12,7 @@ const ArticleDtoSchema = z.object({
     createdAt: z.string(),
     updatedAt: z.string(),
     favorited: z.boolean(),
+    body: z.string().optional(),
     author: z.object({
         username: z.string(),
         image: z.string(),
@@ -26,8 +27,8 @@ const ArticlesDtoSchema = z.object({
 
 export const articlesApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
-        getArticles: create.query<ArticlesData, void>({
-            query: () => '/articles',
+        getArticles: create.query<ArticlesData, string>({
+            query: (offsetNum) => `/articles/?limit=5&offset=${offsetNum}`,
             providesTags: ['Articles', { type: 'Articles', id: 'LIST' }],
             transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
         }),

@@ -1,10 +1,13 @@
 import { FC } from 'react';
-import { articlesApi } from '../api';
 import { useParams } from 'react-router-dom';
-import { ArticleId } from '../types';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { Card, Flex } from 'antd';
+import { articlesApi } from '../api';
+import { ArticleId } from '../types';
 import ArticleMini from '../article-mini';
-import { Card } from 'antd';
+import Markdown from 'react-markdown';
+
+import styles from './article-details.module.scss';
 
 const ArticleDetails: FC = () => {
     const { id } = useParams<{ id: ArticleId }>();
@@ -19,11 +22,22 @@ const ArticleDetails: FC = () => {
     // return <ArticleMini article={data?.article} />;
     // return <>asdas</>;
 
-    return (
-        <Card loading={isLoadingArticle} style={{ width: 938 }} hoverable>
-            <ArticleMini article={article} />
-        </Card>
-    );
+    if (article) {
+        return (
+            <Flex justify="center">
+                <Card
+                    loading={isLoadingArticle}
+                    style={{ width: 938 }}
+                    className={styles.wrapper}
+                >
+                    <ArticleMini article={article} />
+                    <Markdown>{article.body}</Markdown>
+                </Card>
+            </Flex>
+        );
+    }
 };
 
 export default ArticleDetails;
+
+// http://localhost:5173/articles/123-oe2l18

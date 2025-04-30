@@ -7,6 +7,7 @@ import { store } from './store';
 import { articlesApi } from '../modules/articles/api';
 import ArticleList from '../modules/articles/article-list';
 import ArticleDetails from '../modules/articles/article-details';
+import { Pagination } from 'antd';
 
 const loadStore = () =>
     new Promise((resolve) => {
@@ -19,13 +20,7 @@ export const router = createBrowserRouter([
         element: (
             <>
                 <Header />
-                <Link to="articles">acrticles</Link> <Link to="shis">shis</Link>
-                <section
-                    style={{
-                        backgroundColor: 'rgba(235, 238, 243, 1)',
-                        padding: '26px 0px',
-                    }}
-                >
+                <section className="main-section">
                     <Outlet />
                 </section>
             </>
@@ -33,22 +28,26 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                loader: () => redirect('/articles'),
+                loader: () => redirect('/articles/0'),
             },
             {
-                path: 'articles',
+                path: 'articles/:offset',
                 element: <ArticleList />,
-                loader: () => {
+                loader: ({ params }) => {
                     loadStore().then(async () => {
                         store.dispatch(
-                            articlesApi.util.prefetch('getArticles', undefined, {})
+                            articlesApi.util.prefetch(
+                                'getArticles',
+                                params.offset ?? '0',
+                                {}
+                            )
                         );
                     });
                     return null;
                 },
             },
             {
-                path: 'articles/:id',
+                path: 'article/:id',
                 element: <ArticleDetails />,
                 loader: ({ params }) => {
                     loadStore().then(async () => {

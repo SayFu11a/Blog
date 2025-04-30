@@ -9,14 +9,14 @@ type MyTagsProps = {
 const MyTags: FC<MyTagsProps> = ({ tags }) => {
     return (
         <Flex gap="4px 0" wrap>
-            {tags?.map<ReactNode>((tag) => {
+            {tags?.map<ReactNode>((tag, i) => {
                 if (!tag) {
                     return;
                 }
 
                 const isLongTag = tag.length > 20;
                 const tagElem = (
-                    <Tag key={tag} style={{ userSelect: 'none' }}>
+                    <Tag key={i} style={{ userSelect: 'none' }}>
                         <span>{isLongTag ? `${tag.slice(0, 20)}...` : tag}</span>
                     </Tag>
                 );

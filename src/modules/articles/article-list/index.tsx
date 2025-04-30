@@ -1,60 +1,66 @@
 // import styles from './ArticlePage.module.scss';
 // import MyTags from '../../../shared/UI/MyTags';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
-import {
-    EditOutlined,
-    EllipsisOutlined,
-    SettingOutlined,
-    HeartOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+import { Card, Flex, Pagination, PaginationProps } from 'antd';
 
-import { Avatar, Card, Flex, Image, Switch } from 'antd';
-
-import { ArticleId, ArticlesData } from '../types';
+import { ArticleId } from '../types';
 import { articlesApi } from '../api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ArticleMini from '../article-mini';
-
-const actions: React.ReactNode[] = [
-    <EditOutlined key="edit" />,
-    <SettingOutlined key="setting" />,
-    <EllipsisOutlined key="ellipsis" />,
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
+import { skipArticles } from '../articleSlice';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 const ArticleList: FC = () => {
-    const { data, isLoading } = articlesApi.useGetArticlesQuery();
+    // const [skipCount, setSkipCount] = useState(0);
+
+    const skipCount = useSelector((state: RootState) => state.skipCount.value);
+    const dispatch = useDispatch();
+
+    const { offset } = useParams<{ offset: string }>();
+
+    console.log(offset, 'offset');
+
+    const { data, isLoading } = articlesApi.useGetArticlesQuery(skipCount ?? skipToken);
 
     const navigate = useNavigate();
 
     const handleArticleClick = (slug: ArticleId) => {
-        navigate(slug, { relative: 'path' });
+        navigate(`/article/${slug}`, { replace: true });
     };
 
-    console.log(isLoading);
+    const onChange: PaginationProps['onChange'] = (pageNumber) => {
+        console.log('Page: ', pageNumber);
+        dispatch(skipArticles(pageNumber !== 1 ? pageNumber * 5 : 0));
+        console.log(skipCount, 'skipCount');
 
-    return data?.articles?.map((article) => {
-        return (
-            <Flex
-                key={article.slug}
-                gap="middle"
-                align="center"
-                vertical
-                style={{ marginBottom: '26px' }}
-            >
+        navigate(`/articles/${pageNumber !== 1 ? pageNumber * 5 : 0}`, { replace: true });
+    };
+
+    return (
+        <Flex vertical align="center">
+            {data?.articles?.map((article) => (
                 <Card
+                    key={article.slug}
                     onClick={() => handleArticleClick(article.slug)}
                     loading={isLoading}
-                    style={{ width: 938 }}
+                    style={{ width: 938, marginBottom: '20px' }}
                     hoverable
                 >
                     <ArticleMini article={article} />
                 </Card>
-            </Flex>
-        );
-    });
+            ))}
+            <Pagination
+                defaultCurrent={0}
+                total={data ? Math.floor((data?.articlesCount / 5) * 10 - 1) : 0}
+                onChange={onChange}
+                showSizeChanger={false}
+            />
+        </Flex>
+    );
 };
 
 export default ArticleList;

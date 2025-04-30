@@ -5,3 +5,9 @@
 body {
     margin: 0;
 }
+
+.main-section {
+    min-height: 82vh;
+    background-color: rgba(235, 238, 243, 1);
+    padding: 26px 0px;
+}
