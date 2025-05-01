@@ -9,22 +9,23 @@ import { ArticleId } from '../types';
 import { articlesApi } from '../api';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArticleMini from '../article-mini';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../app/store';
-import { skipArticles } from '../articleSlice';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../../../app/store';
+// import { skipArticles } from '../articleSlice';
 import { skipToken } from '@reduxjs/toolkit/query';
 
 const ArticleList: FC = () => {
     // const [skipCount, setSkipCount] = useState(0);
 
-    const skipCount = useSelector((state: RootState) => state.skipCount.value);
-    const dispatch = useDispatch();
+    // const skipCount = useSelector((state: RootState) => state.skipCount.value);
+    // const dispatch = useDispatch();
 
-    const { offset } = useParams<{ offset: string }>();
+    const { offset = '0' } = useParams<{ offset: string }>();
+    const numericOffset = Number(offset);
 
     console.log(offset, 'offset');
 
-    const { data, isLoading } = articlesApi.useGetArticlesQuery(skipCount ?? skipToken);
+    const { data, isLoading } = articlesApi.useGetArticlesQuery(offset ?? skipToken);
 
     const navigate = useNavigate();
 
@@ -32,13 +33,13 @@ const ArticleList: FC = () => {
         navigate(`/article/${slug}`, { replace: true });
     };
 
-    const onChange: PaginationProps['onChange'] = (pageNumber) => {
-        console.log('Page: ', pageNumber);
-        dispatch(skipArticles(pageNumber !== 1 ? pageNumber * 5 : 0));
-        console.log(skipCount, 'skipCount');
+    // const onChange: PaginationProps['onChange'] = (pageNumber) => {
+    //     console.log('Page: ', pageNumber);
+    //     dispatch(skipArticles(pageNumber !== 1 ? pageNumber * 5 : 0));
+    //     console.log(skipCount, 'skipCount');
 
-        navigate(`/articles/${pageNumber !== 1 ? pageNumber * 5 : 0}`, { replace: true });
-    };
+    //     navigate(`/articles/${pageNumber !== 1 ? pageNumber * 5 : 0}`, { replace: true });
+    // };
 
     return (
         <Flex vertical align="center">
@@ -54,9 +55,14 @@ const ArticleList: FC = () => {
                 </Card>
             ))}
             <Pagination
-                defaultCurrent={0}
-                total={data ? Math.floor((data?.articlesCount / 5) * 10 - 1) : 0}
-                onChange={onChange}
+                // defaultCurrent={numericOffset / 5 + 1}
+                current={numericOffset / 5 + 1}
+                // total={data ? Math.floor((data?.articlesCount / 5) * 10 - 1) : 0}
+                total={data ? data.articlesCount : 0}
+                pageSize={5}
+                onChange={(page) => {
+                    navigate(`/articles/${(page - 1) * 5}`);
+                }}
                 showSizeChanger={false}
             />
         </Flex>
