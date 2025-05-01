@@ -1,13 +1,13 @@
-import { createBrowserRouter, Link, Outlet, redirect } from 'react-router-dom';
+import { createBrowserRouter, Outlet, redirect } from 'react-router-dom';
 
-import Header from '../shared/UI/Header';
+import Header from '../modules/Header';
 // import ArticleList from '../modules/articles/article-list';
 
 import { store } from './store';
 import { articlesApi } from '../modules/articles/api';
 import ArticleList from '../modules/articles/article-list';
 import ArticleDetails from '../modules/articles/article-details';
-import { Pagination } from 'antd';
+// import { Pagination } from 'antd';
 
 const loadStore = () =>
     new Promise((resolve) => {
