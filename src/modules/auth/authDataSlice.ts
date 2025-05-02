@@ -9,7 +9,7 @@ export interface authDataState {
 }
 
 const initialState: authDataState = {
-    token: localStorage.getItem('authToken') || '',
+    token: localStorage.getItem('token') || '',
     username: localStorage.getItem('username') || '',
     email: localStorage.getItem('email') || '',
     avatarUrl: localStorage.getItem('avatarUrl') || '',

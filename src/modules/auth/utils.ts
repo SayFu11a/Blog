@@ -17,3 +17,10 @@ export const saveEmail = (email: string) => {
 export const saveAvatarUrl = (avatarUrl: string) => {
     saveHelper('avatarUrl', avatarUrl);
 };
+
+export const removeDataFromLocalStorage = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('avatarUrl');
+};

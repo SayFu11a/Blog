@@ -11,6 +11,7 @@ export function useAuth() {
     const { token, username, email, avatarUrl } = useAppSelector(
         (state) => state.authData
     );
+    console.log('token', token);
 
     return {
         isAuth: !!token,

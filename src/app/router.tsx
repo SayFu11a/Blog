@@ -26,8 +26,8 @@ export const router = createBrowserRouter([
         path: '/',
         element: (
             <>
-                {auth().isAuth ? <>зареган</> : <Header />}
-                {/* <Header /> */}
+                {/* {auth().isAuth ? <>зареган</> : <Header />} */}
+                <Header />
                 <section className="main-section">
                     <Outlet />
                 </section>

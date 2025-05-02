@@ -3,7 +3,7 @@ import { baseApi } from '../shared/api';
 import { router } from './router';
 import skipCountReduser from '../modules/articles/articleSlice';
 import authDataReduser from '../modules/auth/authDataSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const extraArgument = {
     router,
@@ -22,6 +22,7 @@ export const store = configureStore({
 
 export type AppState = ReturnType<typeof store.getState>;
 export const useAppSelector = useSelector.withTypes<AppState>();
+export const useAppDispath = useDispatch.withTypes<AppDispatch>();
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

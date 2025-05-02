@@ -1,6 +1,18 @@
 import { store } from '../../app/store';
-import { setAvatarUrl, setEmail, setToken, setUsername } from './authDataSlice';
-import { saveAvatarUrl, saveEmail, saveToken, saveUsername } from './utils';
+import {
+    removeUser,
+    setAvatarUrl,
+    setEmail,
+    setToken,
+    setUsername,
+} from './authDataSlice';
+import {
+    removeDataFromLocalStorage,
+    saveAvatarUrl,
+    saveEmail,
+    saveToken,
+    saveUsername,
+} from './utils';
 
 const authService = {
     setTokenFn: (token: string) => {
@@ -31,6 +43,10 @@ const authService = {
         store.dispatch(setToken(user.token));
         store.dispatch(setUsername(user.username));
         store.dispatch(setEmail(user.email));
+    },
+    logOut: () => {
+        store.dispatch(removeUser());
+        removeDataFromLocalStorage();
     },
 };
 
