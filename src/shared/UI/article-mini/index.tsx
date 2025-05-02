@@ -4,8 +4,8 @@ import { HeartOutlined } from '@ant-design/icons';
 
 import { Avatar, Flex } from 'antd';
 import styles from './ArticlePage.module.scss';
-import MyTags from '../../../shared/UI/MyTags';
-import { Article } from '../types';
+import MyTags from '../MyTags';
+import { Article } from '../../../modules/articles/types';
 
 type ArticleMiniProps = {
     article: Article | undefined;

@@ -1,6 +1,3 @@
-// import styles from './ArticlePage.module.scss';
-// import MyTags from '../../../shared/UI/MyTags';
-
 import { FC } from 'react';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,7 +5,7 @@ import { Card, Flex, Pagination } from 'antd';
 
 import { ArticleId } from '../types';
 import { articlesApi } from '../api';
-import ArticleMini from '../article-mini';
+import ArticleMini from '../../../shared/UI/article-mini';
 
 const ArticleList: FC = () => {
     const { offset = '0' } = useParams<{ offset: string }>();

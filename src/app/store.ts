@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import { countersReduser } from '../modules/counters/counters.slice';
-
 import { baseApi } from '../shared/api';
 import { router } from './router';
 import skipCountReduser from '../modules/articles/articleSlice';
+import authDataReduser from '../modules/auth/authDataSlice';
+import { useSelector } from 'react-redux';
 
 export const extraArgument = {
     router,
@@ -11,6 +11,7 @@ export const extraArgument = {
 
 export const store = configureStore({
     reducer: {
+        authData: authDataReduser,
         skipCount: skipCountReduser,
         [baseApi.reducerPath]: baseApi.reducer,
     },
@@ -18,6 +19,9 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({ thunk: { extraArgument } }).concat(baseApi.middleware),
 });
+
+export type AppState = ReturnType<typeof store.getState>;
+export const useAppSelector = useSelector.withTypes<AppState>();
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

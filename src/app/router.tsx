@@ -1,25 +1,33 @@
 import { createBrowserRouter, Outlet, redirect } from 'react-router-dom';
-
 import Header from '../modules/Header';
-// import ArticleList from '../modules/articles/article-list';
-
 import { store } from './store';
 import { articlesApi } from '../modules/articles/api';
 import ArticleList from '../modules/articles/article-list';
 import ArticleDetails from '../modules/articles/article-details';
-// import { Pagination } from 'antd';
+import Register from '../modules/auth/register';
+// import { useAuth } from './internal';
+import { useAuth as UseAuth } from '../modules/auth/hooks/use-auth';
 
 const loadStore = () =>
     new Promise((resolve) => {
         setTimeout(() => resolve(store), 0);
     });
 
+const auth = () => {
+    const { isAuth, username } = UseAuth();
+    return {
+        isAuth,
+        username,
+    };
+};
+
 export const router = createBrowserRouter([
     {
         path: '/',
         element: (
             <>
-                <Header />
+                {auth().isAuth ? <>зареган</> : <Header />}
+                {/* <Header /> */}
                 <section className="main-section">
                     <Outlet />
                 </section>
@@ -59,8 +67,8 @@ export const router = createBrowserRouter([
                 },
             },
             {
-                path: 'shis',
-                element: <>shis shis</>,
+                path: 'sign-up',
+                element: <Register />,
             },
         ],
     },

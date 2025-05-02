@@ -4,7 +4,7 @@ import { skipToken } from '@reduxjs/toolkit/query';
 import { Card, Flex } from 'antd';
 import { articlesApi } from '../api';
 import { ArticleId } from '../types';
-import ArticleMini from '../article-mini';
+import ArticleMini from '../../../shared/UI/article-mini';
 import Markdown from 'react-markdown';
 
 import styles from './article-details.module.scss';

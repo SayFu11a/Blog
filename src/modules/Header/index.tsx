@@ -17,7 +17,7 @@ const Header: FC = () => {
                     Sign In
                 </Button>
                 <Button color="green" variant="outlined">
-                    Sign Up
+                    <Link to="/sign-up">Sign Up</Link>
                 </Button>
             </section>
         </header>
