@@ -1,12 +1,9 @@
 import { FC } from 'react';
 
 import { Avatar, Button } from 'antd';
-
 import clases from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/hooks/use-auth';
-import { removeUser } from '../auth/authDataSlice';
-import { useAppDispath } from '../../app/store';
 import authService from '../auth/service';
 
 const defoltAvatarUrl =
@@ -14,7 +11,6 @@ const defoltAvatarUrl =
 
 const Header: FC = () => {
     const { isAuth, username, avatarUrl } = useAuth();
-    const dispatch = useAppDispath();
     console.log(isAuth);
 
     return (
@@ -33,14 +29,22 @@ const Header: FC = () => {
                         >
                             Create article
                         </Button>
-                        <Button color="default" variant="link">
-                            <Link to="/articles/0">{username ?? 'null'}</Link>
-                        </Button>
-                        <Avatar
-                            style={{ marginRight: '20px' }}
-                            src={avatarUrl?.length !== 0 ? avatarUrl : defoltAvatarUrl}
-                            size={44}
-                        />
+                        <Link to="/profile">
+                            <Button color="default" variant="link">
+                                {username ?? 'null'}
+                            </Button>
+                            <div className={clases.avatarWrapper}>
+                                <Avatar
+                                    style={{ marginRight: '20px' }}
+                                    src={
+                                        avatarUrl?.length !== 0
+                                            ? avatarUrl
+                                            : defoltAvatarUrl
+                                    }
+                                    size={44}
+                                />
+                            </div>
+                        </Link>
                         <Button
                             color="default"
                             variant="outlined"
@@ -52,7 +56,7 @@ const Header: FC = () => {
                 ) : (
                     <>
                         <Button color="default" variant="link">
-                            Sign In
+                            <Link to="/sign-in">Sign In</Link>
                         </Button>
                         <Button color="green" variant="outlined">
                             <Link to="/sign-up">Sign Up</Link>
@@ -65,3 +69,6 @@ const Header: FC = () => {
 };
 
 export default Header;
+
+// qweeeeeqweqwe@ma.re
+// 123123

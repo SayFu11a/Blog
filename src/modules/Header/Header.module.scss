@@ -6,3 +6,14 @@
     padding: 0 22px;
     // margin-bottom: 26px;
 }
+
+.avatarWrapper {
+    display: inline-block;
+    margin-right: 20px;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}

@@ -5,28 +5,19 @@ import { articlesApi } from '../modules/articles/api';
 import ArticleList from '../modules/articles/article-list';
 import ArticleDetails from '../modules/articles/article-details';
 import Register from '../modules/auth/register';
-// import { useAuth } from './internal';
-import { useAuth as UseAuth } from '../modules/auth/hooks/use-auth';
+import Login from '../modules/auth/login';
+import Profile from '../modules/auth/profile';
 
 const loadStore = () =>
     new Promise((resolve) => {
         setTimeout(() => resolve(store), 0);
     });
 
-const auth = () => {
-    const { isAuth, username } = UseAuth();
-    return {
-        isAuth,
-        username,
-    };
-};
-
 export const router = createBrowserRouter([
     {
         path: '/',
         element: (
             <>
-                {/* {auth().isAuth ? <>зареган</> : <Header />} */}
                 <Header />
                 <section className="main-section">
                     <Outlet />
@@ -69,6 +60,14 @@ export const router = createBrowserRouter([
             {
                 path: 'sign-up',
                 element: <Register />,
+            },
+            {
+                path: 'sign-in',
+                element: <Login />,
+            },
+            {
+                path: 'profile',
+                element: <Profile />,
             },
         ],
     },

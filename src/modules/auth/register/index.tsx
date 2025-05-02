@@ -4,7 +4,7 @@ import { Button, Checkbox, Form, Input, Flex, Card } from 'antd';
 import { useRegisterUserMutation } from '../api';
 
 import authService from '../service';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 type formData = {
     agreement: boolean;
@@ -138,7 +138,7 @@ const Register: React.FC = () => {
                         <Button block type="primary" htmlType="submit">
                             Create
                         </Button>
-                        Already have an account? <a href="">Sing in.</a>
+                        Already have an account?<Link to="/sign-in">Sing in.</Link>
                     </Form.Item>
                 </Form>
             </Card>

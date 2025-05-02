@@ -10,11 +10,7 @@ import ArticleMini from '../../../shared/UI/article-mini';
 const ArticleList: FC = () => {
     const { offset = '0' } = useParams<{ offset: string }>();
     const numericOffset = Number(offset);
-
-    console.log(offset, 'offset');
-
     const { data, isLoading } = articlesApi.useGetArticlesQuery(offset ?? skipToken);
-
     const navigate = useNavigate();
 
     const handleArticleClick = (slug: ArticleId) => {

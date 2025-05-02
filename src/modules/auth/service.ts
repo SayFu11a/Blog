@@ -44,6 +44,19 @@ const authService = {
         store.dispatch(setUsername(user.username));
         store.dispatch(setEmail(user.email));
     },
+    setAllLoginRespounseDate: (user: {
+        token: string;
+        username: string;
+        email: string;
+    }) => {
+        saveToken(user.token);
+        saveUsername(user.username);
+        saveEmail(user.email);
+
+        store.dispatch(setToken(user.token));
+        store.dispatch(setUsername(user.username));
+        store.dispatch(setEmail(user.email));
+    },
     logOut: () => {
         store.dispatch(removeUser());
         removeDataFromLocalStorage();
