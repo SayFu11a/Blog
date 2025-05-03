@@ -1,34 +1,76 @@
 import React, { useState } from 'react';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Flex, Card } from 'antd';
-import { useRegisterUserMutation } from '../api';
+import { useEditUserMutation, useRegisterUserMutation } from '../api';
 
 import authService from '../service';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../hooks/use-auth';
 
 type formData = {
     email: string;
     password: string;
     username: string;
-    avatarUrl: string;
+    image: string;
 };
 
-const Profile: React.FC = () => {
-    const [number, setNumber] = useState('s');
+interface FieldData {
+    name: string | number | (string | number)[];
+    value?: string | null;
+    touched?: boolean;
+    validating?: boolean;
+    errors?: string[];
+}
 
-    const onNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNumber(e);
-    };
+const Profile: React.FC = () => {
+    const [editUser, { isLoading, error }] = useEditUserMutation();
+    const navigate = useNavigate();
+
+    // const {isAuth, token} = useAuth();
+
+    const [fields, setFields] = useState<FieldData[]>([
+        { name: ['username'], value: localStorage.getItem('username') },
+        { name: ['email'], value: localStorage.getItem('email') },
+    ]);
 
     const onFinish = async (values: formData) => {
-        console.log('Received values of form: ', values);
-        values.username = '123123';
+        try {
+            console.log('Received values of form: ', values);
+            const { username, email, password, image } = values;
+
+            const userData = await editUser({
+                user: {
+                    username,
+                    email,
+                    password,
+                    image,
+                    token: localStorage.getItem('token'),
+                },
+            }).unwrap();
+
+            authService.setAllEditData(userData.user);
+            navigate('/articles/0', { replace: true });
+
+            // console.log(token);
+
+            console.log('edit success:', userData);
+        } catch (e) {
+            console.log('edit feils', e);
+        }
     };
 
     return (
         <Flex align="center" justify="center">
             <Card title="Edit Profile">
-                <Form name="edit" style={{ minWidth: 360 }} onFinish={onFinish}>
+                <Form
+                    name="edit"
+                    style={{ minWidth: 360 }}
+                    fields={fields}
+                    onFieldsChange={(_, allFields) => {
+                        setFields(allFields);
+                    }}
+                    onFinish={onFinish}
+                >
                     Username
                     <Form.Item
                         name="username"
@@ -38,13 +80,16 @@ const Profile: React.FC = () => {
                                 max: 20,
                                 message: 'name must be from 3 to 20 characters ',
                             },
+                            {
+                                pattern: /^[a-z][a-z0-9]*$/,
+                                message:
+                                    'You can only use lowercase English letters and numbers, no spase',
+                            },
                         ]}
                     >
-                        {/*  тут не работает автозаполненеи   */}
-                        <Input value={number} onChange={onNumberChange} />
+                        <Input />
                     </Form.Item>
-                    <Input value={number} onChange={onNumberChange} /> // а тут работает
-                    автозаполненеи Email
+                    Email
                     <Form.Item
                         name="email"
                         rules={[
@@ -71,14 +116,14 @@ const Profile: React.FC = () => {
                     </Form.Item>
                     Avatar image (url)
                     <Form.Item
-                        name="avatarUrl"
+                        name="image"
                         rules={[{ type: 'url', message: 'Please enter URL' }]}
                     >
                         <Input type="url" placeholder="Repeat Password" />
                     </Form.Item>
                     <Form.Item>
                         <Button block type="primary" htmlType="submit">
-                            Create
+                            Save
                         </Button>
                     </Form.Item>
                 </Form>
@@ -88,3 +133,5 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
+// https://i09.fotocdn.net/s219/7768774dff8e4faf/gallery_s/3012842686.jpg

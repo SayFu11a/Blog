@@ -24,8 +24,21 @@ export const registerApi = baseApi.injectEndpoints({
             invalidatesTags: ['Auth'],
             transformResponse: (res: unknown) => res,
         }),
+        editUser: create.mutation({
+            query: (userData) => ({
+                url: `/user`,
+                method: 'PUT',
+                body: userData,
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
+            invalidatesTags: ['Auth'],
+            transformResponse: (res: unknown) => res,
+        }),
     }),
     overrideExisting: true,
 });
 
-export const { useRegisterUserMutation, useLogInUserMutation } = registerApi;
+export const { useRegisterUserMutation, useLogInUserMutation, useEditUserMutation } =
+    registerApi;

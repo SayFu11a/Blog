@@ -57,6 +57,29 @@ const authService = {
         store.dispatch(setUsername(user.username));
         store.dispatch(setEmail(user.email));
     },
+    setAllEditData: (user: {
+        password: string | undefined;
+        username: string | undefined;
+        email: string | undefined;
+        image: string | undefined;
+        token: string;
+    }) => {
+        if (user.username) {
+            saveUsername(user.username);
+            store.dispatch(setUsername(user.username));
+        }
+        if (user.email) {
+            saveEmail(user.email);
+            store.dispatch(setEmail(user.email));
+        }
+        if (user.image) {
+            saveAvatarUrl(user.image);
+            store.dispatch(setAvatarUrl(user.image));
+        }
+
+        store.dispatch(setToken(user.token));
+        saveToken(user.token);
+    },
     logOut: () => {
         store.dispatch(removeUser());
         removeDataFromLocalStorage();
