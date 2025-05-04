@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Flex, Card } from 'antd';
-import { useEditUserMutation, useRegisterUserMutation } from '../api';
+import { Button, Form, Input, Flex, Card } from 'antd';
+import { useEditUserMutation } from '../api';
 
 import authService from '../service';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../hooks/use-auth';
+import { useNavigate } from 'react-router-dom';
 
 type formData = {
     email: string;

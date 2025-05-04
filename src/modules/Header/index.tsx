@@ -27,7 +27,7 @@ const Header: FC = () => {
                             color="green"
                             variant="outlined"
                         >
-                            Create article
+                            <Link to="/new-article">Create article</Link>
                         </Button>
                         <Link to="/profile">
                             <Button color="default" variant="link">

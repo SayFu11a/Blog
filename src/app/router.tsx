@@ -7,6 +7,8 @@ import ArticleDetails from '../modules/articles/article-details';
 import Register from '../modules/auth/register';
 import Login from '../modules/auth/login';
 import Profile from '../modules/auth/profile';
+import ArticleCreate from '../modules/articles/article-create';
+import ArticleEdit from '../modules/articles/article-edit';
 
 const loadStore = () =>
     new Promise((resolve) => {
@@ -58,6 +60,18 @@ export const router = createBrowserRouter([
                 },
             },
             {
+                path: 'article/:id/edit',
+                element: <ArticleEdit />,
+                // loader: ({ params }) => {
+                //     loadStore().then(async () => {
+                //         store.dispatch(
+                //             articlesApi.util.prefetch('getArticle', params.id ?? '', {})
+                //         );
+                //     });
+                //     return null;
+                // },
+            },
+            {
                 path: 'sign-up',
                 element: <Register />,
             },
@@ -68,6 +82,10 @@ export const router = createBrowserRouter([
             {
                 path: 'profile',
                 element: <Profile />,
+            },
+            {
+                path: 'new-article',
+                element: <ArticleCreate />,
             },
         ],
     },

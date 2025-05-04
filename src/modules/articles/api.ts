@@ -38,6 +38,18 @@ export const articlesApi = baseApi.injectEndpoints({
             transformResponse: (res: { article: Article }) =>
                 ArticleDtoSchema.parse(res.article),
         }),
+        createArticle: create.mutation({
+            query: (articleData) => ({
+                url: `/articles`,
+                method: 'POST',
+                body: articleData,
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
+            invalidatesTags: ['Articles'],
+            transformResponse: (res: unknown) => res,
+        }),
         // deleteUser: create.mutation<void, UserId>({
         //     query: (userId) => ({ method: 'DELETE', url: `/users/${userId}` }),
         //     // invalidatesTags: ['Users'], // https://youtu.be/9NVDzMW6b1k?t=9195

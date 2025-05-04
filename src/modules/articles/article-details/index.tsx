@@ -30,7 +30,7 @@ const ArticleDetails: FC = () => {
                     style={{ width: 938 }}
                     className={styles.wrapper}
                 >
-                    <ArticleMini article={article} />
+                    <ArticleMini article={article} isDetalis />
                     <Markdown>{article.body}</Markdown>
                 </Card>
             </Flex>
