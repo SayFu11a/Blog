@@ -29,7 +29,7 @@ export const articlesApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
         getArticles: create.query<ArticlesData, string>({
             query: (offsetNum) => `/articles/?limit=5&offset=${offsetNum}`,
-            providesTags: ['Articles', { type: 'Articles', id: 'LIST' }],
+            providesTags: ['Articles', { type: 'Articles', id: 'LIST' }, 'DeleteArticle'],
             transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
         }),
         getArticle: create.query<Article, ArticleId>({
@@ -48,6 +48,29 @@ export const articlesApi = baseApi.injectEndpoints({
                 },
             }),
             invalidatesTags: ['Articles'],
+            transformResponse: (res: unknown) => res,
+        }),
+        editArticle: create.mutation({
+            query: (articleData) => ({
+                url: `/articles/${articleData.article.slug}`,
+                method: 'PUT',
+                body: articleData,
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
+            invalidatesTags: ['Articles'],
+            transformResponse: (res: unknown) => res,
+        }),
+        deleteArticle: create.mutation({
+            query: (articleId) => ({
+                url: `/articles/${articleId}`,
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
+            invalidatesTags: ['DeleteArticle'],
             transformResponse: (res: unknown) => res,
         }),
         // deleteUser: create.mutation<void, UserId>({

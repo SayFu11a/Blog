@@ -39,10 +39,7 @@ const ArticleMini: FC<ArticleMiniProps> = ({ article, isDetalis }) => {
                         <Avatar src={article?.author?.image} size={44} />
                     </Flex>
                     {isDetalis ? (
-                        <ArticleBottons
-                            autorName={article.author.username}
-                            slug={article.slug}
-                        />
+                        <ArticleBottons autorName={article.author.username} />
                     ) : null}
                 </Flex>
             </Flex>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, Flex, Card } from 'antd';
 import { useEditUserMutation } from '../api';
 
@@ -21,15 +21,17 @@ interface FieldData {
 }
 
 const Profile: React.FC = () => {
+    const [form] = Form.useForm();
+
     const [editUser, { isLoading, error }] = useEditUserMutation();
     const navigate = useNavigate();
 
     // const {isAuth, token} = useAuth();
 
-    const [fields, setFields] = useState<FieldData[]>([
-        { name: ['username'], value: localStorage.getItem('username') },
-        { name: ['email'], value: localStorage.getItem('email') },
-    ]);
+    // const [fields, setFields] = useState<FieldData[]>([
+    //     { name: ['username'], value: localStorage.getItem('username') },
+    //     { name: ['email'], value: localStorage.getItem('email') },
+    // ]);
 
     const onFinish = async (values: formData) => {
         try {
@@ -61,11 +63,16 @@ const Profile: React.FC = () => {
         <Flex align="center" justify="center">
             <Card title="Edit Profile">
                 <Form
+                    form={form}
                     name="edit"
                     style={{ minWidth: 360 }}
-                    fields={fields}
-                    onFieldsChange={(_, allFields) => {
-                        setFields(allFields);
+                    // fields={fields}
+                    // onFieldsChange={(_, allFields) => {
+                    //     setFields(allFields);
+                    // }}
+                    initialValues={{
+                        username: localStorage.getItem('username') || '',
+                        email: localStorage.getItem('email') || '',
                     }}
                     onFinish={onFinish}
                 >

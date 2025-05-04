@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Button, Form, Input, Flex, Card } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -14,42 +14,37 @@ type formData = {
 type ArticleFormProps = {
     onFinish: (values: formData) => void;
     title: string;
-    article: Article | undefined;
+    isEditing?: boolean;
+    article?: Article;
 };
 
-interface FieldData {
-    name: string | number | (string | number)[];
-    value?: string | null | string[];
-    touched?: boolean;
-    validating?: boolean;
-    errors?: string[];
-}
+const ArticleForm: FC<ArticleFormProps> = ({ onFinish, title, isEditing, article }) => {
+    const [form] = Form.useForm();
 
-const ArticleForm: FC<ArticleFormProps> = ({ onFinish, title, article }) => {
-    const [fields, setFields] = useState<FieldData[]>([
-        { name: ['title'], value: article ? 'cumm' : '' },
-        { name: ['description'], value: article ? 'cumm' : '' },
-        { name: ['body'], value: article ? 'cumm' : '' },
-        { name: ['tagList'], value: article ? ['cumm'] : '' },
-    ]);
-    console.log('typeof article', article);
+    useEffect(() => {
+        if (isEditing && article) {
+            form.setFieldsValue({
+                title: article.title,
+                description: article.description,
+                body: article.body,
+                tagList: article.tagList.length ? article.tagList : [''],
+            });
+        }
+    }, [isEditing, article, form]);
 
-    const conditionalProps =
-        typeof article === 'object'
-            ? {
-                  onFieldsChange: (_, allFields: FieldData[]) => setFields(allFields),
-              }
-            : {};
+    console.log('ArticleForm render');
 
     return (
         <Flex align="center" justify="center">
             <Card title={title}>
                 <Form
+                    form={form}
                     name="createArticle"
                     style={{ minWidth: 900 }}
-                    fields={fields}
-                    {...conditionalProps}
                     onFinish={onFinish}
+                    // fields={fields}
+                    // {...conditionalProps}
+                    initialValues={{ tagList: [''] }}
                 >
                     Title
                     <Form.Item
