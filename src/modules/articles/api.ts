@@ -34,11 +34,16 @@ export const articlesApi = baseApi.injectEndpoints({
                     Authorization: `Token ${localStorage.getItem('token')}`,
                 },
             }),
-            providesTags: ['Articles', { type: 'Articles', id: 'LIST' }, 'DeleteArticle'],
+            providesTags: ['Articles', 'DeleteArticle'],
             transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
         }),
         getArticle: create.query<Article, ArticleId>({
-            query: (articleId) => `/articles/${articleId}`,
+            query: (articleId) => ({
+                url: `/articles/${articleId}`,
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
             providesTags: ['Articles'],
             transformResponse: (res: { article: Article }) =>
                 ArticleDtoSchema.parse(res.article),
