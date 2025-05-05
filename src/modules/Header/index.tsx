@@ -11,7 +11,6 @@ const defoltAvatarUrl =
 
 const Header: FC = () => {
     const { isAuth, username, avatarUrl } = useAuth();
-    console.log(isAuth);
 
     return (
         <header className={clases.header}>

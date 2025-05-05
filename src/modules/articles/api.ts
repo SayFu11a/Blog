@@ -28,7 +28,12 @@ const ArticlesDtoSchema = z.object({
 export const articlesApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
         getArticles: create.query<ArticlesData, string>({
-            query: (offsetNum) => `/articles/?limit=5&offset=${offsetNum}`,
+            query: (offsetNum) => ({
+                url: `/articles/?limit=5&offset=${offsetNum}`,
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
             providesTags: ['Articles', { type: 'Articles', id: 'LIST' }, 'DeleteArticle'],
             transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
         }),
@@ -73,10 +78,28 @@ export const articlesApi = baseApi.injectEndpoints({
             invalidatesTags: ['DeleteArticle'],
             transformResponse: (res: unknown) => res,
         }),
-        // deleteUser: create.mutation<void, UserId>({
-        //     query: (userId) => ({ method: 'DELETE', url: `/users/${userId}` }),
-        //     // invalidatesTags: ['Users'], // https://youtu.be/9NVDzMW6b1k?t=9195
-        // }),
+        likeArticle: create.mutation({
+            query: (articleId) => ({
+                url: `/articles/${articleId}/favorite`,
+                method: 'POST',
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
+            invalidatesTags: ['Articles'],
+            transformResponse: (res: unknown) => res,
+        }),
+        unLikeArticle: create.mutation({
+            query: (articleId) => ({
+                url: `/articles/${articleId}/favorite`,
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
+            invalidatesTags: ['Articles'],
+            transformResponse: (res: unknown) => res,
+        }),
     }),
     overrideExisting: true,
 });

@@ -1,12 +1,18 @@
 import { FC } from 'react';
 
-import { HeartOutlined } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+
+// import HeardFiled from '../../../assets/heardFiled.svg';
+
+// import { ReactComponent as HeardFiled } from '../../../assets/HeardFiled.svg';
 
 import { Avatar, Flex } from 'antd';
 import styles from './ArticlePage.module.scss';
 import MyTags from '../MyTags';
 import { Article } from '../../../modules/articles/types';
 import ArticleBottons from '../article-bottons';
+import { articlesApi } from '../../../modules/articles/api';
+import { useAuth } from '../../../modules/auth/hooks/use-auth';
 
 type ArticleMiniProps = {
     article: Article | undefined;
@@ -14,13 +20,47 @@ type ArticleMiniProps = {
 };
 
 const ArticleMini: FC<ArticleMiniProps> = ({ article, isDetalis }) => {
+    const [likeArticle, { isLoading, error }] = articlesApi.useLikeArticleMutation();
+    const [unLikeArticle] = articlesApi.useUnLikeArticleMutation();
+
+    const { isAuth } = useAuth();
+
+    const likeHandle = (e) => {
+        if (isAuth) {
+            likeArticle(article?.slug);
+        }
+        e.stopPropagation(e);
+    };
+    const unLikeHandle = (e) => {
+        if (isAuth) {
+            unLikeArticle(article?.slug);
+        }
+        e.stopPropagation(e);
+    };
+
     if (article) {
         const data = new Date(article?.createdAt ?? '');
         return (
             <Flex justify="space-between">
-                <div>
-                    <span className={styles.title}>{article?.title}</span>{' '}
-                    <HeartOutlined /> <span>{article?.favoritesCount}</span>
+                <div style={{ transition: 'all 0.2s ease-in-out' }}>
+                    <Flex align="center">
+                        <span className={styles.title}>{article?.title}</span>{' '}
+                        {article.favorited ? (
+                            <HeartFilled
+                                style={{ color: 'red' }}
+                                className={styles.heart}
+                                onClick={unLikeHandle}
+                            />
+                        ) : (
+                            <HeartOutlined
+                                className={styles.heart}
+                                onClick={likeHandle}
+                            />
+                        )}
+                        <span style={{ marginLeft: '5px' }}>
+                            {article?.favoritesCount}
+                        </span>
+                    </Flex>
                     <MyTags tags={article?.tagList} />
                     <div className={styles.text}>{article?.description}</div>
                 </div>

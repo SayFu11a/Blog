@@ -29,3 +29,10 @@
     text-align: right;
     margin-right: 12px;
 }
+
+.heart:hover {
+    transform: scale(1.2);
+}
+.heart {
+    padding: '5px';
+}

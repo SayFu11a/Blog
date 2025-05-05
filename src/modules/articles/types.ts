@@ -8,6 +8,7 @@ export type Article = {
     title: string;
     description: string;
     slug: ArticleId;
+    favorited: boolean;
     favoritesCount: number;
     tagList: string[];
     createdAt: string;
