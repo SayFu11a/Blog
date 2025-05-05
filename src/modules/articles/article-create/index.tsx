@@ -24,7 +24,7 @@ const ArticleCreate: FC = () => {
                 article: { ...values },
             }).unwrap();
 
-            navigate(`/article/${data.article.slug}`, { replace: true });
+            navigate(`/article/${data.article.slug}`);
             console.log('Create success:', data);
         } catch (e) {
             console.log('Create error:', e);

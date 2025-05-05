@@ -34,16 +34,11 @@ export const router = createBrowserRouter([
             {
                 path: 'articles/:offset',
                 element: <ArticleList />,
-                loader: ({ params }) => {
-                    loadStore().then(async () => {
-                        store.dispatch(
-                            articlesApi.util.prefetch(
-                                'getArticles',
-                                params.offset ?? '0',
-                                {}
-                            )
-                        );
-                    });
+                loader: async ({ params }) => {
+                    await loadStore();
+                    store.dispatch(
+                        articlesApi.util.prefetch('getArticles', params.offset ?? '0', {})
+                    );
                     return null;
                 },
             },

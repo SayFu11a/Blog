@@ -28,7 +28,7 @@ const Register: React.FC = () => {
 
             authService.setAllRegisterRespounseDate(userData.user);
 
-            navigate('/articles/0', { replace: true });
+            navigate('/articles/0');
 
             console.log('Registration success:', userData);
         } catch (error) {

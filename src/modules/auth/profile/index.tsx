@@ -41,7 +41,7 @@ const Profile: React.FC = () => {
             }).unwrap();
 
             authService.setAllEditData(userData.user);
-            navigate('/articles/0', { replace: true });
+            navigate('/articles/0');
 
             // console.log(token);
 

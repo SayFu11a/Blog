@@ -26,7 +26,7 @@ const Login: React.FC = () => {
 
             authService.setAllLoginRespounseDate(userData.user);
 
-            navigate('/articles/0', { replace: true });
+            navigate('/articles/0');
 
             console.log('login success:', userData);
         } catch (error) {

@@ -15,7 +15,7 @@ const ArticleList: FC = () => {
     const navigate = useNavigate();
 
     const handleArticleClick = (slug: ArticleId) => {
-        navigate(`/article/${slug}`, { replace: true });
+        navigate(`/article/${slug}`);
     };
 
     return (

@@ -23,7 +23,7 @@ const ArticleBottons: FC<{ autorName: string }> = ({ autorName }) => {
         try {
             setConfirmLoading(true);
             const data = await deleteArticle(id).unwrap();
-            navigate('/articles/0', { replace: true });
+            navigate('/articles/0');
 
             setOpen(false);
             setConfirmLoading(false);
