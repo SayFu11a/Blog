@@ -31,7 +31,7 @@ const ArticleEdit: FC = () => {
                 article: { ...values, slug: id },
             }).unwrap();
 
-            navigate('/articles/0', { replace: true });
+            navigate(`/article/${data.article.slug}`, { replace: true });
             console.log('Edit success:', data);
         } catch (e) {
             console.log('Edit error:', e);

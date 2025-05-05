@@ -7,7 +7,7 @@ const MyLoader: FC<{ height?: number }> = ({ height = 129 }) => (
         speed={2}
         width={940}
         height={height}
-        viewBox={`0 0 940 129 ${height}`}
+        viewBox={`0 0 940 ${height}`}
         backgroundColor="#dadada"
         foregroundColor="#fafafa"
     >

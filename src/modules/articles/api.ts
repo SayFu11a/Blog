@@ -58,7 +58,7 @@ export const articlesApi = baseApi.injectEndpoints({
                 },
             }),
             invalidatesTags: ['Articles'],
-            transformResponse: (res: unknown) => res,
+            transformResponse: (res: { article: Article }) => res,
         }),
         editArticle: create.mutation({
             query: (articleData) => ({
@@ -70,7 +70,7 @@ export const articlesApi = baseApi.injectEndpoints({
                 },
             }),
             invalidatesTags: ['Articles'],
-            transformResponse: (res: unknown) => res,
+            transformResponse: (res: { article: Article }) => res,
         }),
         deleteArticle: create.mutation({
             query: (articleId) => ({
