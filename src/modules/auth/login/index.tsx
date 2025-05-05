@@ -13,7 +13,7 @@ type formData = {
 };
 
 const Login: React.FC = () => {
-    const [loginUser, { isLoading, error }] = useLogInUserMutation();
+    const [loginUser] = useLogInUserMutation();
     const navigate = useNavigate();
 
     const onFinish = async (values: formData) => {

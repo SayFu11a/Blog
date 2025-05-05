@@ -12,8 +12,7 @@ type formData = {
 };
 
 const ArticleCreate: FC = () => {
-    const [createArticleReqwest, { isLoading, error }] =
-        articlesApi.useCreateArticleMutation();
+    const [createArticleReqwest, { error }] = articlesApi.useCreateArticleMutation();
 
     const navigate = useNavigate();
 

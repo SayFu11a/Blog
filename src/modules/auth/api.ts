@@ -21,6 +21,14 @@ type editData = {
     };
 };
 
+type loginData = {
+    user: {
+        token: string;
+        username: string;
+        email: string;
+    };
+};
+
 export const registerApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
         registerUser: create.mutation({
@@ -39,7 +47,7 @@ export const registerApi = baseApi.injectEndpoints({
                 body: userData,
             }),
             invalidatesTags: ['Auth'],
-            transformResponse: (res: unknown) => res,
+            transformResponse: (res: loginData) => res,
         }),
         editUser: create.mutation({
             query: (userData) => ({
