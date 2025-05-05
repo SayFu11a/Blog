@@ -1,6 +1,6 @@
 import { Button, Flex, Popconfirm } from 'antd';
 import { FC, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { articlesApi } from '../../../modules/articles/api';
 import { ArticleId } from '../../../modules/articles/types';
 
@@ -40,6 +40,11 @@ const ArticleBottons: FC<{ autorName: string }> = ({ autorName }) => {
         setOpen(false);
     };
 
+    const handleEdit: React.MouseEventHandler<HTMLSpanElement> = (e) => {
+        e.stopPropagation();
+        navigate('edit');
+    };
+
     return autorName === localStorage.getItem('username') ? (
         <Flex justify="right">
             <Popconfirm
@@ -59,8 +64,8 @@ const ArticleBottons: FC<{ autorName: string }> = ({ autorName }) => {
                     Delete
                 </Button>
             </Popconfirm>{' '}
-            <Button color="green" variant="outlined">
-                <Link to="edit">Edit</Link>
+            <Button color="green" variant="outlined" onClick={handleEdit}>
+                Edit
             </Button>
         </Flex>
     ) : null;
