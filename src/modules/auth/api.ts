@@ -1,8 +1,25 @@
-import { z } from 'zod';
+// import { z } from 'zod';
 // import { baseApi } from '../../shared/api';
 import { baseApi } from '../../shared/api';
 
 // import { ArticlesData, ArticleId, Article } from './types';
+type registerData = {
+    user: {
+        token: string;
+        username: string;
+        email: string;
+    };
+};
+
+type editData = {
+    user: {
+        password: string | undefined;
+        username: string | undefined;
+        email: string | undefined;
+        image: string | undefined;
+        token: string;
+    };
+};
 
 export const registerApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
@@ -13,7 +30,7 @@ export const registerApi = baseApi.injectEndpoints({
                 body: userData,
             }),
             invalidatesTags: ['Auth'],
-            transformResponse: (res: unknown) => res,
+            transformResponse: (res: registerData) => res,
         }),
         logInUser: create.mutation({
             query: (userData) => ({
@@ -34,7 +51,7 @@ export const registerApi = baseApi.injectEndpoints({
                 },
             }),
             invalidatesTags: ['Auth'],
-            transformResponse: (res: unknown) => res,
+            transformResponse: (res: editData) => res,
         }),
     }),
     overrideExisting: true,

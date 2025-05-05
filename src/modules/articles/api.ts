@@ -8,11 +8,11 @@ const ArticleDtoSchema = z.object({
     description: z.string(),
     slug: z.string(),
     favoritesCount: z.number(),
-    tagList: z.array(z.nullable(z.string())).optional(),
+    tagList: z.array(z.string()),
     createdAt: z.string(),
     updatedAt: z.string(),
     favorited: z.boolean(),
-    body: z.string().optional(),
+    body: z.string(),
     author: z.object({
         username: z.string(),
         image: z.string(),

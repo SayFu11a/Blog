@@ -15,7 +15,7 @@ type formData = {
 };
 
 const Register: React.FC = () => {
-    const [registerUser, { isLoading, error }] = useRegisterUserMutation();
+    const [registerUser] = useRegisterUserMutation();
     const navigate = useNavigate();
 
     const onFinish = async (values: formData) => {

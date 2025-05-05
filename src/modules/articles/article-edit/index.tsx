@@ -18,12 +18,10 @@ const ArticleEdit: FC = () => {
 
     const navigate = useNavigate();
 
-    const { data: article, isLoading: isLoadingArticle } = articlesApi.useGetArticleQuery(
-        id ?? skipToken
-    );
+    const { data: article } = articlesApi.useGetArticleQuery(id ?? skipToken);
     console.log(id);
 
-    const [editArticle, { isLoading, error }] = articlesApi.useEditArticleMutation();
+    const [editArticle, { error }] = articlesApi.useEditArticleMutation();
 
     const onFinish = async (values: formData) => {
         try {

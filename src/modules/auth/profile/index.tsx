@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button, Form, Input, Flex, Card } from 'antd';
 import { useEditUserMutation } from '../api';
 
@@ -12,18 +12,10 @@ type formData = {
     image: string;
 };
 
-interface FieldData {
-    name: string | number | (string | number)[];
-    value?: string | null;
-    touched?: boolean;
-    validating?: boolean;
-    errors?: string[];
-}
-
 const Profile: React.FC = () => {
     const [form] = Form.useForm();
 
-    const [editUser, { isLoading, error }] = useEditUserMutation();
+    const [editUser] = useEditUserMutation();
     const navigate = useNavigate();
 
     // const {isAuth, token} = useAuth();

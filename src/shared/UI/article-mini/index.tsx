@@ -2,10 +2,6 @@ import { FC } from 'react';
 
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 
-// import HeardFiled from '../../../assets/heardFiled.svg';
-
-// import { ReactComponent as HeardFiled } from '../../../assets/HeardFiled.svg';
-
 import { Avatar, Flex } from 'antd';
 import styles from './ArticlePage.module.scss';
 import MyTags from '../MyTags';
@@ -20,22 +16,23 @@ type ArticleMiniProps = {
 };
 
 const ArticleMini: FC<ArticleMiniProps> = ({ article, isDetalis }) => {
-    const [likeArticle, { isLoading, error }] = articlesApi.useLikeArticleMutation();
+    const [likeArticle] = articlesApi.useLikeArticleMutation();
     const [unLikeArticle] = articlesApi.useUnLikeArticleMutation();
 
     const { isAuth } = useAuth();
 
-    const likeHandle = (e) => {
+    const likeHandle: React.MouseEventHandler<HTMLSpanElement> = (e) => {
+        e.stopPropagation();
+
         if (isAuth) {
             likeArticle(article?.slug);
         }
-        e.stopPropagation(e);
     };
-    const unLikeHandle = (e) => {
+    const unLikeHandle: React.MouseEventHandler<HTMLSpanElement> = (e) => {
+        e.stopPropagation();
         if (isAuth) {
             unLikeArticle(article?.slug);
         }
-        e.stopPropagation(e);
     };
 
     if (article) {

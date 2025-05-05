@@ -9,7 +9,7 @@ const ArticleBottons: FC<{ autorName: string }> = ({ autorName }) => {
 
     const navigate = useNavigate();
 
-    const [deleteArticle, { isLoading, error }] = articlesApi.useDeleteArticleMutation();
+    const [deleteArticle, { error }] = articlesApi.useDeleteArticleMutation();
     console.log(id);
 
     const [open, setOpen] = useState(false);
