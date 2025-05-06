@@ -3,6 +3,13 @@
 import { baseApi } from '../../shared/api';
 
 // import { ArticlesData, ArticleId, Article } from './types';
+
+type getUserData = {
+    user: {
+        image: string | undefined;
+    };
+};
+
 type registerData = {
     user: {
         token: string;
@@ -31,6 +38,16 @@ type loginData = {
 
 export const registerApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
+        getUser: create.query({
+            query: () => ({
+                url: `/user`,
+                headers: {
+                    Authorization: `Token ${localStorage.getItem('token')}`,
+                },
+            }),
+            providesTags: ['Auth'],
+            transformResponse: (res: getUserData) => res,
+        }),
         registerUser: create.mutation({
             query: (userData) => ({
                 url: `/users`,
@@ -65,5 +82,9 @@ export const registerApi = baseApi.injectEndpoints({
     overrideExisting: true,
 });
 
-export const { useRegisterUserMutation, useLogInUserMutation, useEditUserMutation } =
-    registerApi;
+export const {
+    useRegisterUserMutation,
+    useLogInUserMutation,
+    useEditUserMutation,
+    useGetUserQuery,
+} = registerApi;

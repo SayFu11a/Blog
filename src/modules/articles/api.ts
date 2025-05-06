@@ -1,29 +1,6 @@
-import { z } from 'zod';
 import { baseApi } from '../../shared/api';
 
 import { ArticlesData, ArticleId, Article } from './types';
-
-const ArticleDtoSchema = z.object({
-    title: z.string(),
-    description: z.string(),
-    slug: z.string(),
-    favoritesCount: z.number(),
-    tagList: z.array(z.string()),
-    createdAt: z.string(),
-    updatedAt: z.string(),
-    favorited: z.boolean(),
-    body: z.string(),
-    author: z.object({
-        username: z.string(),
-        image: z.string(),
-        following: z.boolean(),
-    }),
-});
-
-const ArticlesDtoSchema = z.object({
-    articles: z.array(ArticleDtoSchema),
-    articlesCount: z.number(),
-});
 
 export const articlesApi = baseApi.injectEndpoints({
     endpoints: (create) => ({
@@ -35,7 +12,8 @@ export const articlesApi = baseApi.injectEndpoints({
                 },
             }),
             providesTags: ['Articles', 'DeleteArticle'],
-            transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
+            // transformResponse: (res: unknown) => ArticlesDtoSchema.parse(res),
+            transformResponse: (res: ArticlesData) => res,
         }),
         getArticle: create.query<Article, ArticleId>({
             query: (articleId) => ({
@@ -45,8 +23,7 @@ export const articlesApi = baseApi.injectEndpoints({
                 },
             }),
             providesTags: ['Articles'],
-            transformResponse: (res: { article: Article }) =>
-                ArticleDtoSchema.parse(res.article),
+            transformResponse: (res: { article: Article }) => res.article,
         }),
         createArticle: create.mutation({
             query: (articleData) => ({

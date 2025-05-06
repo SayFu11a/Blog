@@ -10,5 +10,6 @@ export function useAuth() {
         username,
         email,
         avatarUrl,
+        token,
     };
 }

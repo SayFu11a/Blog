@@ -13,7 +13,7 @@ type formData = {
 };
 
 const Login: React.FC = () => {
-    const [loginUser] = useLogInUserMutation();
+    const [loginUser, { isError }] = useLogInUserMutation();
     const navigate = useNavigate();
 
     const onFinish = async (values: formData) => {
@@ -21,7 +21,7 @@ const Login: React.FC = () => {
         try {
             const { email, password } = values;
             const userData = await loginUser({
-                user: { email, password },
+                user: { email: email.toLowerCase(), password },
             }).unwrap();
 
             authService.setAllLoginRespounseDate(userData.user);
@@ -30,7 +30,8 @@ const Login: React.FC = () => {
 
             console.log('login success:', userData);
         } catch (error) {
-            console.error('login failed:', error);
+            console.error('login failed:111111', error);
+            console.error('login failed2:', isError);
         }
     };
 
@@ -77,6 +78,11 @@ const Login: React.FC = () => {
                         </Button>
                         Don’t have an account? <Link to="/sign-up">Sign Up.</Link>
                     </Form.Item>
+                    {isError ? (
+                        <span style={{ color: 'red', fontSize: '16px' }}>
+                            email or password: is invalid
+                        </span>
+                    ) : null}
                 </Form>
             </Card>
         </Flex>
