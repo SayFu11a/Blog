@@ -48,11 +48,14 @@ const authService = {
         token: string;
         username: string;
         email: string;
+        image: string;
     }) => {
         saveToken(user.token);
         saveUsername(user.username);
         saveEmail(user.email);
+        saveAvatarUrl(user.image);
 
+        store.dispatch(setAvatarUrl(user.image));
         store.dispatch(setToken(user.token));
         store.dispatch(setUsername(user.username));
         store.dispatch(setEmail(user.email));

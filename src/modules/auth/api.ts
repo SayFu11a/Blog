@@ -33,6 +33,7 @@ type loginData = {
         token: string;
         username: string;
         email: string;
+        image: string;
     };
 };
 

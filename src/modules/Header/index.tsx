@@ -5,22 +5,12 @@ import clases from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/hooks/use-auth';
 import authService from '../auth/service';
-import { useGetUserQuery } from '../auth/api';
-import { skipToken } from '@reduxjs/toolkit/query';
 
 const defoltAvatarUrl =
     'https://avatars.mds.yandex.net/i?id=abd175a694c17c392bb27a8c7041ddea_sr-10109607-images-thumbs&n=13';
 
 const Header: FC = () => {
-    const { isAuth, username, avatarUrl, token } = useAuth();
-
-    const { data } = useGetUserQuery(token ?? skipToken);
-
-    console.log(avatarUrl, 'avatarUrl');
-    console.log('data', data?.user?.image ?? 'non');
-
-    // !сделать после авторизации с паролем и почтой эту штуку useGetUserQuery
-    // и данные в локал сторедж сохранить картинку то есть
+    const { isAuth, username, avatarUrl } = useAuth();
 
     return (
         <header className={clases.header}>
@@ -45,7 +35,7 @@ const Header: FC = () => {
                             <div className={clases.avatarWrapper}>
                                 <Avatar
                                     style={{ marginRight: '20px' }}
-                                    src={data?.user?.image ?? defoltAvatarUrl}
+                                    src={avatarUrl ?? defoltAvatarUrl}
                                     size={44}
                                 />
                             </div>
