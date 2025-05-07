@@ -1,0 +1,1 @@
+export { useArticleDetails } from './useArticleDetails';

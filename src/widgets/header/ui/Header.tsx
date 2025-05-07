@@ -3,14 +3,14 @@ import { FC } from 'react';
 import { Avatar, Button } from 'antd';
 import clases from './Header.module.scss';
 import { Link } from 'react-router-dom';
-// import { useAuth } from '../auth/hooks/use-auth';
-import userService from '../../entities/user/lib/service';
-import { useAuth } from '../../entities/user/model/hooks/use-auth';
+import userService from '../../../entities/user/lib/service';
+// import { useAuth } from '../../../entities/auth/model/hooks/use-auth';
+import { useAuth } from '../../../entities/user/model/hooks/use-auth';
 
 const defoltAvatarUrl =
   'https://avatars.mds.yandex.net/i?id=abd175a694c17c392bb27a8c7041ddea_sr-10109607-images-thumbs&n=13';
 
-const Header: FC = () => {
+export const Header: FC = () => {
   const { isAuth, username, avatarUrl } = useAuth();
 
   return (
@@ -59,5 +59,3 @@ const Header: FC = () => {
     </header>
   );
 };
-
-export default Header;

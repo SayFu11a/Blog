@@ -1,8 +1,8 @@
 import { Button, Flex, Popconfirm } from 'antd';
 import { FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { articlesApi } from '../../../modules/articles/api';
-import { ArticleId } from '../../../modules/articles/types';
+import { articlesApi } from '../../../entities/articles/api/articlesApi'; // ! тут что то придумать
+import { ArticleId } from '../../../entities/articles/model/types'; // ! тут что то придумать
 
 const ArticleBottons: FC<{ autorName: string }> = ({ autorName }) => {
     const { id } = useParams<{ id: ArticleId }>();
