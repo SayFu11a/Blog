@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { ArticleForm } from '../../../../shared/UI/article-form';
+import { ArticleForm } from '../../../../widgets/article-form';
 import { useArticleCreate } from '../model';
 
 export const ArticleCreate: FC = () => {

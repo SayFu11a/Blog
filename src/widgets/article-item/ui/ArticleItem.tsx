@@ -1,42 +1,21 @@
 import { FC } from 'react';
 
-// ! перенести в articles/ui или articles/modul
-
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 
 import { Avatar, Flex } from 'antd';
-import styles from './ArticlePage.module.scss';
-import MyTags from '../my-tags/MyTags';
+import styles from './ArticleItem.module.scss';
+import MyTags from './MyTags';
 import { Article } from '../../../entities/articles/model/types';
-import ArticleBottons from '../article-bottons';
-import { articlesApi } from '../../../entities/articles/api/articlesApi';
-import { useAuth } from '../../../entities/user/model/hooks/use-auth';
-// import { useAuth } from '../../../modules/auth/hooks/use-auth';
+import ArticleBottons from './ArticleBottons';
+import { useArticleItem } from '../model';
 
-type ArticleMiniProps = {
+type ArticleItemProps = {
   article: Article | undefined;
   isDetalis?: boolean | undefined;
 };
 
-const ArticleMini: FC<ArticleMiniProps> = ({ article, isDetalis }) => {
-  const [likeArticle] = articlesApi.useLikeArticleMutation();
-  const [unLikeArticle] = articlesApi.useUnLikeArticleMutation();
-
-  const { isAuth } = useAuth();
-
-  const likeHandle: React.MouseEventHandler<HTMLSpanElement> = (e) => {
-    e.stopPropagation();
-
-    if (isAuth) {
-      likeArticle(article?.slug);
-    }
-  };
-  const unLikeHandle: React.MouseEventHandler<HTMLSpanElement> = (e) => {
-    e.stopPropagation();
-    if (isAuth) {
-      unLikeArticle(article?.slug);
-    }
-  };
+export const ArticleItem: FC<ArticleItemProps> = ({ article, isDetalis }) => {
+  const { likeHandle, unLikeHandle } = useArticleItem(article?.slug);
 
   if (article) {
     const data = new Date(article?.createdAt ?? '');
@@ -79,5 +58,3 @@ const ArticleMini: FC<ArticleMiniProps> = ({ article, isDetalis }) => {
     );
   }
 };
-
-export default ArticleMini;

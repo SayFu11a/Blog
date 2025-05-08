@@ -4,7 +4,6 @@ import { Avatar, Button } from 'antd';
 import clases from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import userService from '../../../entities/user/lib/service';
-// import { useAuth } from '../../../entities/auth/model/hooks/use-auth';
 import { useAuth } from '../../../entities/user/model/hooks/use-auth';
 
 const defoltAvatarUrl =

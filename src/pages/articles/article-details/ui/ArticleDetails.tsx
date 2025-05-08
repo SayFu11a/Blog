@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Card, Flex } from 'antd';
-import ArticleMini from '../../../../shared/UI/article-mini';
+import { ArticleItem } from '../../../../widgets/article-item';
 import Markdown from 'react-markdown';
 
-import MyLoader from '../../../../shared/UI/skeleton';
+import MyLoader from '../../../../shared/ui/skeleton';
 import { useArticleDetails } from '../model';
 
 export const ArticleDetails: FC = () => {
@@ -21,7 +21,7 @@ export const ArticleDetails: FC = () => {
     return (
       <Flex justify="center">
         <Card style={{ width: 938 }}>
-          <ArticleMini article={article} isDetalis />
+          <ArticleItem article={article} isDetalis />
           <Markdown>{article.body}</Markdown>
         </Card>
       </Flex>

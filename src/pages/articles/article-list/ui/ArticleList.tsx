@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Flex, Pagination } from 'antd';
 
-import ArticleMini from '../../../../shared/UI/article-mini';
-import LoaderList from '../../../../shared/UI/loader-list/loader-list';
+import { ArticleItem } from '../../../../widgets/article-item';
+import LoaderList from '../../../../shared/ui/loader-list/LoaderList';
 
 import { ArticleId } from '../../../../entities/articles/model/types';
 import { useArticleList } from '../model';
@@ -28,7 +28,7 @@ export const ArticleList: FC = () => {
             style={{ width: 938, marginBottom: '20px' }}
             hoverable
           >
-            <ArticleMini article={article} />
+            <ArticleItem article={article} />
           </Card>
         ))
       )}
