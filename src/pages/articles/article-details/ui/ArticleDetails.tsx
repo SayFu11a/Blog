@@ -3,7 +3,7 @@ import { Card, Flex } from 'antd';
 import { ArticleItem } from '../../../../widgets/article-item';
 import Markdown from 'react-markdown';
 
-import MyLoader from '../../../../shared/ui/skeleton';
+import { MyLoader } from '../../../../shared/ui/MyLoader';
 import { useArticleDetails } from '../model';
 
 export const ArticleDetails: FC = () => {
