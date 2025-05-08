@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Flex, Pagination } from 'antd';
 
 import { ArticleItem } from '../../../../widgets/article-item';
-import LoaderList from '../../../../shared/ui/loader-list/LoaderList';
 
 import { ArticleId } from '../../../../entities/articles/model/types';
 import { useArticleList } from '../model';
+import LoaderList from '../../../../shared/ui/loader-list/LoaderList';
 
 export const ArticleList: FC = () => {
   const { articles, isLoading, currentPage, totalPage } = useArticleList();
