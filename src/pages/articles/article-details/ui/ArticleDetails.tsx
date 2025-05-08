@@ -6,6 +6,7 @@ import Markdown from 'react-markdown';
 // import { MyLoader } from '../../../../shared/ui/my-loader';
 import { useArticleDetails } from '../model';
 import { MyLoader } from '../../../../shared/ui/my-loader';
+// import { MyLoader } from '../../../../shared/ui/my-loader';
 
 export const ArticleDetails: FC = () => {
   const { article, isLoadingArticle } = useArticleDetails();
