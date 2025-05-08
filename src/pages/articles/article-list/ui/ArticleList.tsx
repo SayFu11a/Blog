@@ -6,7 +6,7 @@ import { ArticleItem } from '../../../../widgets/article-item';
 
 import { ArticleId } from '../../../../entities/articles/model/types';
 import { useArticleList } from '../model';
-import LoaderList from '../../../../shared/ui/loader-list/LoaderList';
+import { LoaderList } from '../../../../shared/ui/loader-list';
 
 export const ArticleList: FC = () => {
   const { articles, isLoading, currentPage, totalPage } = useArticleList();
