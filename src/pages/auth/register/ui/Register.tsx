@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useRegister } from '../model';
 
 export const Register: React.FC = () => {
-  const { onFinish } = useRegister();
+  const { onFinish, error } = useRegister();
 
   return (
     <Flex align="center" justify="center">
@@ -94,6 +94,13 @@ export const Register: React.FC = () => {
               </Form.Item>
             </Flex>
           </Form.Item>
+          <>
+            {error && 'status' in error && error.status === 422 ? (
+              <span style={{ color: 'red' }}>Email or username is already taken</span>
+            ) : error ? (
+              <span style={{ color: 'red' }}>Error</span>
+            ) : null}
+          </>
           <Form.Item>
             <Button block type="primary" htmlType="submit">
               Create

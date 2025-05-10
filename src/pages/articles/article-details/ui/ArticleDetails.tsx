@@ -3,10 +3,8 @@ import { Card, Flex } from 'antd';
 import { ArticleItem } from '../../../../widgets/article-item';
 import Markdown from 'react-markdown';
 
-// import { MyLoader } from '../../../../shared/ui/my-loader';
 import { useArticleDetails } from '../model';
 import { MyLoader } from '../../../../shared/ui/my-loader';
-// import { MyLoader } from '../../../../shared/ui/my-loader';
 
 export const ArticleDetails: FC = () => {
   const { article, isLoadingArticle } = useArticleDetails();

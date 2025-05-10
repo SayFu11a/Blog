@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { useEditUserMutation } from '../../../../entities/user/api/userApi';
-import userService from '../../../../entities/user/lib/service';
+import { useAppDispath } from '../../../../shared/redux';
+import { editUserSaveData } from '../../../../entities/user/model/userThunks';
 
 type formData = {
   email: string;
@@ -10,8 +10,8 @@ type formData = {
 };
 
 export function useProfile() {
-  const [editUser] = useEditUserMutation();
-  const navigate = useNavigate();
+  const [editUser, { error }] = useEditUserMutation();
+  const dispatch = useAppDispath();
 
   const onFinish = async (values: formData) => {
     try {
@@ -28,8 +28,7 @@ export function useProfile() {
         },
       }).unwrap();
 
-      userService.setAllEditData(userData.user);
-      navigate('/articles/0');
+      dispatch(editUserSaveData(userData.user));
 
       console.log('edit success:', userData);
     } catch (e) {
@@ -39,5 +38,6 @@ export function useProfile() {
 
   return {
     onFinish,
+    error,
   };
 }

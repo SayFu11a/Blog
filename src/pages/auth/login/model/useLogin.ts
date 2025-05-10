@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { useLogInUserMutation } from '../../../../entities/user/api/userApi';
-import userService from '../../../../entities/user/lib/service';
+import { logInSaveData } from '../../../../entities/user/model/userThunks';
+import { useAppDispath } from '../../../../shared/redux';
 
 type formData = {
   email: string;
@@ -10,7 +10,7 @@ type formData = {
 
 export function useLogin() {
   const [loginUser, { isError }] = useLogInUserMutation();
-  const navigate = useNavigate();
+  const dispatch = useAppDispath();
 
   const onFinish = async (values: formData) => {
     console.log('Received values of form: ', values);
@@ -20,13 +20,11 @@ export function useLogin() {
         user: { email: email.toLowerCase(), password },
       }).unwrap();
 
-      userService.setAllLoginRespounseDate(userData.user);
-
-      navigate('/articles/0');
+      dispatch(logInSaveData(userData.user));
 
       console.log('login success:', userData);
     } catch (error) {
-      console.error('login failed:111111', error);
+      console.error('login failed:1', error);
       console.error('login failed2:', isError);
     }
   };

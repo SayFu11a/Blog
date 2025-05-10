@@ -5,7 +5,7 @@ import { useProfile } from '../model';
 
 export const Profile: React.FC = () => {
   const [form] = Form.useForm();
-  const { onFinish } = useProfile();
+  const { onFinish, error } = useProfile();
 
   return (
     <Flex align="center" justify="center">
@@ -65,8 +65,11 @@ export const Profile: React.FC = () => {
           </Form.Item>
           Avatar image (url)
           <Form.Item name="image" rules={[{ type: 'url', message: 'Please enter URL' }]}>
-            <Input type="url" placeholder="Repeat Password" />
+            <Input type="url" placeholder="url" />
           </Form.Item>
+          {error ? (
+            <span style={{ color: 'red' }}>Username or Email is already taken</span>
+          ) : null}
           <Form.Item>
             <Button block type="primary" htmlType="submit">
               Save

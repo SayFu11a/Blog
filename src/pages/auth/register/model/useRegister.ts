@@ -1,6 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 import { useRegisterUserMutation } from '../../../../entities/user/api/userApi';
-import userService from '../../../../entities/user/lib/service';
+// import userService from '../../../../entities/user/lib/service';
+import { registerSaveData } from '../../../../entities/user/model/userThunks';
+import { useAppDispath } from '../../../../shared/redux';
 
 type formData = {
   agreement: boolean;
@@ -11,8 +15,9 @@ type formData = {
 };
 
 export function useRegister() {
-  const [registerUser] = useRegisterUserMutation();
-  const navigate = useNavigate();
+  const [registerUser, { error }] = useRegisterUserMutation();
+
+  const dispatch = useAppDispath();
 
   const onFinish = async (values: formData) => {
     console.log('Received values of form: ', values);
@@ -21,18 +26,16 @@ export function useRegister() {
       const userData = await registerUser({
         user: { username, email, password },
       }).unwrap();
-
-      userService.setAllRegisterRespounseDate(userData.user);
-
-      navigate('/articles/0');
-
+      dispatch(registerSaveData(userData.user));
       console.log('Registration success:', userData);
-    } catch (error) {
-      console.error('Registration failed:', error);
+    } catch (err) {
+      console.error('Registration failed:', err);
+      console.error('registerError22222:', error);
     }
   };
 
   return {
     onFinish,
+    error: error as FetchBaseQueryError | SerializedError,
   };
 }

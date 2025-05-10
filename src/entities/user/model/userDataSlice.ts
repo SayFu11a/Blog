@@ -12,7 +12,7 @@ const initialState: userDataState = {
   token: localStorage.getItem('token') || '',
   username: localStorage.getItem('username') || '',
   email: localStorage.getItem('email') || '',
-  avatarUrl: localStorage.getItem('avatarUrl') || '',
+  avatarUrl: localStorage.getItem('avatarUrl') || null,
 };
 
 export const userDataSlice = createSlice({
