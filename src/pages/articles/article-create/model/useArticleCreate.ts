@@ -21,7 +21,7 @@ export function useArticleCreate() {
         article: { ...values },
       }).unwrap();
 
-      navigate(`/article/${data.article.slug}`);
+      navigate('/articles/0');
       console.log('Create success:', data);
     } catch (e) {
       console.log('Create error:', e);

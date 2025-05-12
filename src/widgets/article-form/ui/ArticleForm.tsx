@@ -54,6 +54,7 @@ export const ArticleForm: FC<ArticleFormProps> = ({
             name="title"
             rules={[
               {
+                whitespace: true,
                 required: true,
                 message: 'Please input title!',
               },
@@ -64,14 +65,22 @@ export const ArticleForm: FC<ArticleFormProps> = ({
           Short description
           <Form.Item
             name="description"
-            rules={[{ required: true, message: 'Please input your description!' }]}
+            rules={[
+              {
+                whitespace: true,
+                required: true,
+                message: 'Please input your description!',
+              },
+            ]}
           >
             <Input placeholder="description" />
           </Form.Item>
           Text
           <Form.Item
             name="body"
-            rules={[{ required: true, message: 'Please input your text!' }]}
+            rules={[
+              { whitespace: true, required: true, message: 'Please input your text!' },
+            ]}
           >
             <TextArea placeholder="text" style={{ height: '160px' }} />
           </Form.Item>
@@ -100,7 +109,7 @@ export const ArticleForm: FC<ArticleFormProps> = ({
                         {
                           required: true,
                           whitespace: true,
-                          message: "Please input passenger's name or delete this field.",
+                          message: 'Please input at list 1 tag.',
                         },
                       ]}
                       noStyle
